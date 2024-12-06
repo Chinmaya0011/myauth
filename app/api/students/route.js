@@ -1,4 +1,4 @@
-// app/api/students/route.js (or route.ts if you're using TypeScript)
+// app/api/students/route.js
 
 export async function GET(request) {
   const students = [
@@ -39,10 +39,27 @@ export async function GET(request) {
     },
   ];
 
+  // Define CORS headers
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*", // Allow all origins (for development)
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS", // Allow specific methods
+    "Access-Control-Allow-Headers": "Content-Type", // Allow specific headers
+  };
+
+  // Handle OPTIONS method (pre-flight request) for CORS
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders,
+    });
+  }
+
+  // Return the response with students data and CORS headers
   return new Response(JSON.stringify(students), {
     status: 200,
     headers: {
       "Content-Type": "application/json",
+      ...corsHeaders, // Include CORS headers
     },
   });
 }

@@ -1,5 +1,5 @@
 "use client";  // This line is needed in Next.js 13+ to indicate it's a client-side component
-
+import style from "../styles/Student.module.css"
 import { useState, useEffect } from "react";
 
 const Page = () => {
