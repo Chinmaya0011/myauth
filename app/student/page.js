@@ -1,7 +1,7 @@
-"use client";
+"use client"
 import { useState, useEffect } from "react";
 
-const Page = () => {
+const Page = () => {  // Change 'page' to 'Page'
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Page;  // Ensure the export matches the updated component name

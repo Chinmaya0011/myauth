@@ -1,53 +1,45 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-const page = ({params}) => {
-const {id}=React.use(params);
-const idAsNumber=Number(id);
+const Page = ({ params }) => {
+  const { id } = params; // Get the id directly from params
+  const idAsNumber = Number(id); // Convert id to a number
+  
+  const [students, setStudents] = useState([]);
+  const [student, setStudent] = useState(null); // Initialize with null, not undefined
 
-const[students,setStudents]=useState([]);
-const[student,setStudent]=useState();
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/students");
+        const data = await response.json();
+        setStudents(data);
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchStudents();
+  }, []); // Fetch students only once on component mount
 
-useEffect(()=>{
-  const fetchStudent=async()=>{
-    try{
-      const response=await fetch("http://localhost:3000/api/students");
-      const data=await response.json();
-      setStudents(data);
-      console.log(data)
+  useEffect(() => {
+    if (students.length > 0) {
+      const foundStudent = students.find((s) => s.id === idAsNumber); // Look for the student by id
+      setStudent(foundStudent);
     }
-    catch(err){
-      console.log(err);
-    }
+  }, [students, idAsNumber]); // Re-run when students or id changes
+
+  if (!student) {
+    return <h1>Loading or No Student Found...</h1>; // Show a loading message or no student found
   }
-  fetchStudent();
-},[])
-
-useEffect(()=>{
-  if(students.length>0){
-    const findStudent=students.find((student)=>student.id===idAsNumber);
-    setStudent(findStudent);
-  }
-},[students,idAsNumber])
-
-
-if(!student){
-  return(
-    <h1>Please Wait...</h1>
-  )
-}
-
-
-
-
 
   return (
-    <div key={student.id}>
+    <div>
       <h1>{student.name}</h1>
-      <p>{student.age}</p>
+      <p>Age: {student.age}</p>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
