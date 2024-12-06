@@ -6,7 +6,7 @@ export const metadata = {
       title: "Students List | My Application",
       description: "View a list of students fetched from the backend API.",
       image: "/images/student-image.jpg",
-      url: "http://localhost:3000/students",
+      url: "https://myauth-orpin.vercel.app/student",
     },
     twitter: {
       card: "summary_large_image",
